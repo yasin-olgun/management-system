@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,6 +16,7 @@ import java.util.List;
 @Accessors(chain = true)
 @Entity
 @Table(name = "employee")
+@EntityListeners(AuditingEntityListener.class)
 public class Employee {
 
     @Id
@@ -36,7 +38,6 @@ public class Employee {
     @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;
-
 
 
 }

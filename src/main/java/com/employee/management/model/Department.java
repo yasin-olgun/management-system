@@ -4,14 +4,19 @@ package com.employee.management.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Data
 @Entity
 @Table(name = "department")
 @Accessors(chain = true)
+@EntityListeners(AuditingEntityListener.class)
 public class Department {
 
     @Id
@@ -21,6 +26,12 @@ public class Department {
     private String name;
 
     private String address;
+
+    @CreatedDate
+    private Date createdDate;
+
+    @LastModifiedDate
+    private Date updated;
 
     @OneToOne
     @JoinColumn(name = "employee_id")

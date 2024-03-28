@@ -7,10 +7,8 @@ import com.employee.management.model.Employee;
 import com.employee.management.repository.CompanyRepository;
 import com.employee.management.repository.DepartmentRepository;
 import com.employee.management.repository.EmployeeRepository;
-import com.employee.management.service.DepartmentService;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.type.descriptor.DateTimeUtils;
 import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
