@@ -28,4 +28,9 @@ public class DepartmentController {
         return departmentService.addDepartment(departmentDto);
     }
 
+    @PostMapping("manager")
+    public ResponseEntity<String> updateManager(@RequestBody DepartmentDto departmentDto) {
+        return departmentService.addManager(departmentDto);
+    }
+
 }

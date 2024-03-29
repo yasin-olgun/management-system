@@ -31,11 +31,22 @@ public class DepartmentService {
 
     public ResponseEntity<String> addDepartment(DepartmentDto departmentDto) {
         Department department = DepartmentMapper.mapToDepartment(departmentDto);
-        //Department department = DepartmentMapper2.INSTANCE.toDepartment(departmentDto);
         departmentRepository.save(department);
         log.info("DepartmentService -> addDepartment -> Department add completed");
 
         return new ResponseEntity<>("Department saved successfully", HttpStatus.OK);
+    }
+
+    public ResponseEntity<String> addManager(DepartmentDto departmentDto) {
+
+        Department department = departmentRepository.findById(departmentDto.getId()).orElse(null);
+        if (department == null) {
+            return new ResponseEntity<>("Department not found", HttpStatus.NO_CONTENT);
+        }
+        department.setManager(departmentDto.getManager());
+        departmentRepository.save(department);
+        return new ResponseEntity<>("Department manager updated", HttpStatus.OK);
+
     }
 
 }

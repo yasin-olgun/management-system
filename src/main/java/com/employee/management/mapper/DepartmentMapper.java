@@ -8,13 +8,15 @@ public class DepartmentMapper {
     public static DepartmentDto mapToDepartmentDto(Department department) {
         return new DepartmentDto()
                 .setId(department.getId())
-                .setName(department.getName());
+                .setName(department.getName())
+                .setManager(department.getManager());
     }
 
     public static Department mapToDepartment(DepartmentDto departmentDto) {
         return new Department()
                 .setId(departmentDto.getId())
-                .setName(departmentDto.getName());
+                .setName(departmentDto.getName())
+                .setManager(departmentDto.getManager());
     }
 
 
