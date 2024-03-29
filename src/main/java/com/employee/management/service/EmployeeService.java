@@ -25,7 +25,7 @@ public class EmployeeService {
 
     public ResponseEntity<String> addEmployee(EmployeeDto employeeDto) {
 
-        Department department = departmentService.findById(employeeDto.getDepartmentId());
+        Department department = departmentService.findById(employeeDto.getDepartment().getId());
 
         if (department == null) {
             log.info("EmployeeService -> addEmployee -> Department not found");
@@ -43,7 +43,7 @@ public class EmployeeService {
 
     public ResponseEntity<String> updateEmployee(EmployeeDto employeeDto) {
         Employee employee = employeeRepository.findById(employeeDto.getId()).orElse(null);
-        Department department = departmentService.findById(employeeDto.getDepartmentId());
+        Department department = departmentService.findById(employeeDto.getDepartment().getId());
 
         if (employee == null) {
             log.info("EmployeeService -> updateEmployee -> Employee not found");
@@ -55,7 +55,6 @@ public class EmployeeService {
             log.info("EmployeeService -> updateEmployee -> Department not found");
             return new ResponseEntity<>("Department not found", HttpStatus.NO_CONTENT);
         }
-
         employee = EmployeeMapper.mapToEmployee(employeeDto);
         employeeRepository.save(employee);
         log.info("EmployeeService -> updateEmployee -> Employee updated");

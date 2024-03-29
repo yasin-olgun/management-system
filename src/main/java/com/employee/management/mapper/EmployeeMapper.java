@@ -12,8 +12,7 @@ public class EmployeeMapper {
                 .setLastName(employee.getLastName())
                 .setSalary(employee.getSalary())
                 .setEmail(employee.getEmail())
-                .setDepartmentId(employee.getDepartment().getId())
-                .setDepartmentName(employee.getDepartment().getName())
+                .setDepartment(employee.getDepartment())
                 .setCompanyName(employee.getDepartment().getCompany().getName());
     }
 
@@ -23,6 +22,7 @@ public class EmployeeMapper {
                 .setEmail(employeeDto.getEmail())
                 .setFirstName(employeeDto.getFirstName())
                 .setSalary(employeeDto.getSalary())
-                .setLastName(employeeDto.getLastName());
+                .setLastName(employeeDto.getLastName())
+                .setDepartment(employeeDto.getDepartment());
     }
 }

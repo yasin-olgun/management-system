@@ -1,5 +1,7 @@
 package com.employee.management;
 
+import com.employee.management.model.Company;
+import com.employee.management.model.Country;
 import com.employee.management.model.Department;
 import com.employee.management.model.Employee;
 import com.employee.management.repository.CompanyRepository;
@@ -46,6 +48,22 @@ class ManagementApplicationTests {
                 .setDepartment(department)
                 .setSalary(10);
         employeeRepository.save(employee);
+    }
+
+    @Test
+    public void addCompany() {
+        Company company = new Company()
+                .setName("MICROSOFT")
+                .setCountry(Country.USA);
+
+        Department department = new Department()
+                .setCompany(company)
+                .setName("Test")
+                .setAddress("ISTANBUL");
+
+
+        companyRepository.save(company);
+        departmentRepository.save(department);
     }
 
 

@@ -24,6 +24,7 @@ public class CompanyService {
         return new ResponseEntity<>(companies, HttpStatus.OK);
     }
 
+
     public ResponseEntity<Page<Company>> listPage(int page, int size) {
 
         Page<Company> companies = companyRepository.findAll(PageRequest.of(page, size));
@@ -38,5 +39,11 @@ public class CompanyService {
         return new ResponseEntity<>(company, HttpStatus.OK);
     }
 
+
+    public ResponseEntity<String> addCompany(Company company) {
+        companyRepository.save(company);
+        log.info("CompanyService -> addCompany -> Saved!");
+        return new ResponseEntity<>("Saved", HttpStatus.OK);
+    }
 
 }

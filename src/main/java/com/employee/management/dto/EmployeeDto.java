@@ -1,5 +1,6 @@
 package com.employee.management.dto;
 
+import com.employee.management.model.Department;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -12,8 +13,7 @@ public class EmployeeDto {
     private String lastName;
     private String email;
     private float salary;
-    private Long departmentId;
-    private String departmentName;
+    private Department department;
     private String companyName;
 
 
