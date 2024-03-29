@@ -20,12 +20,10 @@ public class EmployeeController {
     public ResponseEntity<String> addEmployee(@RequestBody EmployeeDto employeeDto) {
         return employeeService.addEmployee(employeeDto);
     }
-
     @PostMapping("update")
     public ResponseEntity<String> updateEmployee(@RequestBody EmployeeDto employeeDto) {
         return employeeService.updateEmployee(employeeDto);
     }
-
     @GetMapping("search")
     public ResponseEntity<Page<EmployeeDto>> searchEmployee(@RequestBody EmployeeSearchFilter employeeSearchFilter, @RequestParam(value = "page", required = false, defaultValue = "0") int page,
                                                             @RequestParam(value = "size", required = false, defaultValue = "10") int size) {

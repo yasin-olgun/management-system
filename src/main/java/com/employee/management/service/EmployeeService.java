@@ -7,6 +7,7 @@ import com.employee.management.model.Employee;
 import com.employee.management.model.EmployeeSearchFilter;
 import com.employee.management.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
@@ -26,11 +28,15 @@ public class EmployeeService {
         Department department = departmentService.findById(employeeDto.getDepartmentId());
 
         if (department == null) {
+            log.info("EmployeeService -> addEmployee -> Department not found");
+
             return new ResponseEntity<>("Department not found", HttpStatus.NO_CONTENT);
         }
 
         Employee employee = EmployeeMapper.mapToEmployee(employeeDto);
         employeeRepository.save(employee);
+        log.info("EmployeeService -> addEmployee -> Employee saved successfully");
+
         return new ResponseEntity<>("Employee saved successfully", HttpStatus.OK);
 
     }
@@ -40,15 +46,20 @@ public class EmployeeService {
         Department department = departmentService.findById(employeeDto.getDepartmentId());
 
         if (employee == null) {
+            log.info("EmployeeService -> updateEmployee -> Employee not found");
+
             return new ResponseEntity<>("Employee not found", HttpStatus.NO_CONTENT);
         }
 
         if (department == null) {
+            log.info("EmployeeService -> updateEmployee -> Department not found");
             return new ResponseEntity<>("Department not found", HttpStatus.NO_CONTENT);
         }
 
         employee = EmployeeMapper.mapToEmployee(employeeDto);
         employeeRepository.save(employee);
+        log.info("EmployeeService -> updateEmployee -> Employee updated");
+
         return new ResponseEntity<>("Employee updated", HttpStatus.OK);
 
     }
@@ -79,6 +90,7 @@ public class EmployeeService {
         Page<Employee> employees = employeeRepository.findAll(spec, page);
 
         Page<EmployeeDto> employeeDtos = employees.map(EmployeeMapper::mapToEmployeeDto);
+        log.info("EmployeeService -> searchEmployees -> searchEmployees completed");
 
         return new ResponseEntity<Page<EmployeeDto>>(employeeDtos, HttpStatus.OK);
     }

@@ -10,6 +10,7 @@ import com.employee.management.repository.EmployeeRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import java.util.Random;
 
 @RequiredArgsConstructor
 @Component
@@ -25,85 +26,66 @@ public class DataInitializer {
     public void initData() {
 
         if (companyRepository.findAll().isEmpty()) {
-            addCompany();
-        }
-
-        if (departmentRepository.findAll().isEmpty()) {
-            addDepartment();
-        }
-
-        if (employeeRepository.findAll().isEmpty()) {
-            addEmployee();
+          initRandomData();
         }
 
 
     }
 
-    private void addCompany() {
+    public int generateRandomNumber(int min, int max) {
+        Random rand = new Random();
+        return rand.nextInt((max - min) + 1) + min;
+    }
+
+    private String generateRandomString() {
+        int n = 10;
+        // choose a Character random from this String
+        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                + "0123456789"
+                + "abcdefghijklmnopqrstuvxyz";
+
+        // create StringBuffer size of AlphaNumericString
+        StringBuilder sb = new StringBuilder(n);
+
+        for (int i = 0; i < n; i++) {
+
+            // generate a random number between
+            // 0 to AlphaNumericString variable length
+            int index
+                    = (int) (AlphaNumericString.length()
+                    * Math.random());
+
+            // add Character one by one in end of sb
+            sb.append(AlphaNumericString
+                    .charAt(index));
+        }
+
+        return sb.toString();
+    }
+
+    private void initRandomData() {
         Company company = new Company()
                 .setCountry(Country.TURKIYE)
                 .setName("GOOGLE");
-
         companyRepository.save(company);
-    }
+        Department department = new Department();
+        Employee employee = new Employee();
 
-    private void addDepartment() {
-        Company company = companyRepository.findByName("GOOGLE");
-        Department department = new Department()
-                .setName("IT")
-                .setAddress("ANKARA")
-                .setCompany(company);
+        for (int i = 0; i < 5; i++) {
+            department.setName(generateRandomString())
+                    .setAddress("ANKARA")
+                    .setCompany(company);
 
-        Department department2 = new Department()
-                .setName("HR")
-                .setAddress("ANKARA")
-                .setCompany(company);
-
-        Department department3 = new Department()
-                .setName("FINANCE")
-                .setAddress("ANKARA")
-                .setCompany(company);
-
-        departmentRepository.save(department);
-        departmentRepository.save(department2);
-        departmentRepository.save(department3);
-    }
-
-    private void addEmployee() {
-
-
-        Employee employee = new Employee()
-                .setFirstName("Morgan")
-                .setLastName("Wallace")
-                .setSalary(50000)
-                .setEmail("morgan@morgan.com")
-                .setDepartment(departmentRepository.findByName("IT"));
-        employeeRepository.save(employee);
-
-        Employee employee2 = new Employee()
-                .setFirstName("Lucille")
-                .setLastName("Levy")
-                .setSalary(70000)
-                .setEmail("lucille@temp.com")
-                .setDepartment(departmentRepository.findByName("HR"));
-        employeeRepository.save(employee2);
-
-        Employee employee3 = new Employee()
-                .setFirstName("John")
-                .setLastName("Hickman")
-                .setSalary(20000)
-                .setEmail("john@john.com")
-                .setDepartment(departmentRepository.findByName("FINANCE"));
-        employeeRepository.save(employee3);
-
-        Employee employee4 = new Employee()
-                .setFirstName("Harry")
-                .setLastName("Potter")
-                .setSalary(60000)
-                .setEmail("harry@potter.com")
-                .setDepartment(departmentRepository.findByName("IT"));
-        employeeRepository.save(employee4);
-
+            departmentRepository.save(department);
+            for (int j = 0; j < 10; j++) {
+                employee.setFirstName(generateRandomString())
+                        .setLastName(generateRandomString())
+                        .setSalary(generateRandomNumber(10000, 100000))
+                        .setEmail(generateRandomString() + "@" + generateRandomString() + ".com")
+                        .setDepartment(department);
+                employeeRepository.save(employee);
+            }
+        }
     }
 
 
